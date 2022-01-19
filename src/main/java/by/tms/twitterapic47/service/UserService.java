@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository userStorage;
 
-    public User create(User user) {
+    public User save(User user) {
         if (userStorage.findByUsername(user.getUsername()).isPresent()) {
             throw new RuntimeException("User already exist!");
         } else {
@@ -22,15 +22,13 @@ public class UserService {
         }
     }
 
-    public User updateUser(User user) {
-        if (userStorage.findByUsername(user.getUsername()).isPresent()) {
-            throw new RuntimeException("User not found!");
-        } else {
-            return userStorage.save(user);
-        }
+    public User update(String username, User user) {
+        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+        user.setId(byUsername.getId());
+        return userStorage.save(user);
     }
 
-    public User deleteUser(String username) {
+    public User delete(String username) {
         Optional<User> user = userStorage.deleteByUsername(username);
         if (user.isPresent()) {
             return user.get();
@@ -40,16 +38,25 @@ public class UserService {
     }
 
     public String follow(String username, String followUsername) {
-        Optional<User> byUsername = userStorage.findByUsername(username);
-        Optional<User> byFollowUsername = userStorage.findByUsername(followUsername);
-        if (byUsername.isPresent() && byFollowUsername.isPresent()) {
-            List<User> subscriptions = byUsername.get().getSubscriptions();
-            subscriptions.add(byFollowUsername.get());
-            byUsername.get().setSubscriptions(subscriptions);
-            userStorage.save(byUsername.get());
-            return byFollowUsername.get().getUsername();
+        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+        User followUser = userStorage.findByUsername(followUsername).orElseThrow(()->new RuntimeException("Follower not found"));
+        if (byUsername.getSubscriptions().contains(followUser)) {
+            throw new RuntimeException("Subscribe already exist");
         } else {
-            throw new RuntimeException("User not found!");
+            byUsername.getSubscriptions().add(followUser);
+            userStorage.save(byUsername);
+            return followUsername;
+        }
+    }
+
+    public String unfollow(String username, String unfollowUsername) {
+        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+        User unfollow = userStorage.findByUsername(unfollowUsername).orElseThrow(()->new RuntimeException("Subscription not found"));
+        if (byUsername.getSubscriptions().remove(unfollow)) {
+            userStorage.save(byUsername);
+            return unfollowUsername;
+        } else {
+            throw new RuntimeException("Subscription not found");
         }
     }
 }
