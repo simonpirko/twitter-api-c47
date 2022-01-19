@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +54,7 @@ public class CommentService {
 
     public List<GetSaveCommentDto> getAllCommentsByPostId(long postId) {
         Post postById = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
-        if (postById.getComments() == null) {
+        if (postById.getComments() == null||postById.getComments().isEmpty()) {
             throw new RuntimeException("Comments not found");
         } else {
             return getSaveCommentDtoListFromPost(postById);

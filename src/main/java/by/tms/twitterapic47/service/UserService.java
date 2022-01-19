@@ -22,23 +22,20 @@ public class UserService {
     }
 
     public User update(String username, User user) {
-        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+        User byUsername = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         user.setId(byUsername.getId());
         return userStorage.save(user);
     }
 
     public User delete(String username) {
-        Optional<User> user = userStorage.deleteByUsername(username);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new RuntimeException("User not found!");
-        }
+        User user = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        userStorage.delete(user);
+        return user;
     }
 
     public String follow(String username, String followUsername) {
-        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
-        User followUser = userStorage.findByUsername(followUsername).orElseThrow(()->new RuntimeException("Follower not found"));
+        User byUsername = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        User followUser = userStorage.findByUsername(followUsername).orElseThrow(() -> new RuntimeException("Follower not found"));
         if (byUsername.getSubscriptions().contains(followUser)) {
             throw new RuntimeException("Subscribe already exist");
         } else {
@@ -49,8 +46,8 @@ public class UserService {
     }
 
     public String unfollow(String username, String unfollowUsername) {
-        User byUsername = userStorage.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
-        User unfollow = userStorage.findByUsername(unfollowUsername).orElseThrow(()->new RuntimeException("Subscription not found"));
+        User byUsername = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        User unfollow = userStorage.findByUsername(unfollowUsername).orElseThrow(() -> new RuntimeException("Subscription not found"));
         if (byUsername.getSubscriptions().remove(unfollow)) {
             userStorage.save(byUsername);
             return unfollowUsername;
