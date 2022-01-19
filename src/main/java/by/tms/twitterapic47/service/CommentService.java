@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -46,20 +47,20 @@ public class CommentService {
 
     public GetSaveCommentDto delete(long commentId) {
         Comment commentById = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
-        GetSaveCommentDto dto = new GetSaveCommentDto(commentById.getId(), commentById.getCreator().getUsername(),
-                commentById.getDescription(), commentById.getDateCreating(), commentById.getPost().getTitle());
+        GetSaveCommentDto dto = setFieldsGetSaveCommentDto(commentById);
         commentRepository.delete(commentById);
         return dto;
     }
 
-    public List<Comment> getAllCommentsByPostId(long postId) {
+    public List<GetSaveCommentDto> getAllCommentsByPostId(long postId) {
         Post postById = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
         if (postById.getComments() == null) {
             throw new RuntimeException("Comments not found");
         } else {
-            return  postById.getComments();
+            return getSaveCommentDtoListFromPost(postById);
         }
     }
+
 
     private String setDate() {
         Date date = new Date();
@@ -68,4 +69,17 @@ public class CommentService {
         return format1.format(date);
     }
 
+    private List<GetSaveCommentDto> getSaveCommentDtoListFromPost(Post post) {
+        return post.getComments().stream().map(this::setFieldsGetSaveCommentDto).collect(Collectors.toList());
+    }
+
+    private GetSaveCommentDto setFieldsGetSaveCommentDto(Comment comment) {
+        GetSaveCommentDto commentDto = new GetSaveCommentDto();
+        commentDto.setId(comment.getId());
+        commentDto.setCreatorName(comment.getCreator().getUsername());
+        commentDto.setDescription(comment.getDescription());
+        commentDto.setDateCreating(comment.getDateCreating());
+        commentDto.setPostName(comment.getPost().getTitle());
+        return commentDto;
+    }
 }
