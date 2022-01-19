@@ -28,10 +28,10 @@ public class User {
 
     private String lastName;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.DETACH)
     private List<User> subscriptions;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
     @Enumerated(value = EnumType.STRING)

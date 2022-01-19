@@ -18,7 +18,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private User creator;
 
     private String title;
@@ -27,6 +27,6 @@ public class Post {
 
     private String dateCreating;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> comments;
 }

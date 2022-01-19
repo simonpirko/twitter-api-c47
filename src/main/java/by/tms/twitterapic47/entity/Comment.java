@@ -18,13 +18,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private User creator;
 
     private String description;
 
     private String dateCreating;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Post post;
 }
