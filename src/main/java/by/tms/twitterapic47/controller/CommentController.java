@@ -3,11 +3,14 @@ package by.tms.twitterapic47.controller;
 import by.tms.twitterapic47.dto.comment.GetSaveCommentDto;
 import by.tms.twitterapic47.dto.comment.SaveCommentDto;
 import by.tms.twitterapic47.entity.Comment;
+import by.tms.twitterapic47.entity.Post;
 import by.tms.twitterapic47.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
@@ -16,11 +19,25 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/add/{postId}")
-    public ResponseEntity<?> add(@PathVariable("postId") long postId, @RequestBody SaveCommentDto saveCommentDto) {
-        Comment add = commentService.add(convertSaveCommentDtoToComment(saveCommentDto), postId, saveCommentDto.getUsername());
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody SaveCommentDto saveCommentDto) {
+        Comment add = commentService.add(convertSaveCommentDtoToComment(saveCommentDto),
+                saveCommentDto.getPostId(), saveCommentDto.getUsername());
+
         GetSaveCommentDto getSaveComment = convertCommentToGetSaveCommentDto(add);
         return new ResponseEntity<>(getSaveComment, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<?> deleteByCommentId(@PathVariable("commentId") long commentId) {
+        GetSaveCommentDto delete = commentService.delete(commentId);
+        return new ResponseEntity<>(delete, HttpStatus.OK);
+    }
+
+    @GetMapping("/postId")
+    public ResponseEntity<?> getAllCommentsByPostId(@PathVariable("postId") long postId) {
+        List<Comment> comments = commentService.getAllCommentsByPostId(postId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 

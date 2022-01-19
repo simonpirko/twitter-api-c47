@@ -1,5 +1,6 @@
 package by.tms.twitterapic47.service;
 
+import by.tms.twitterapic47.dto.comment.GetSaveCommentDto;
 import by.tms.twitterapic47.entity.Comment;
 import by.tms.twitterapic47.entity.Post;
 import by.tms.twitterapic47.entity.User;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -38,6 +41,23 @@ public class CommentService {
             return comment;
         } else {
             throw new RuntimeException("Post not found");
+        }
+    }
+
+    public GetSaveCommentDto delete(long commentId) {
+        Comment commentById = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
+        GetSaveCommentDto dto = new GetSaveCommentDto(commentById.getId(), commentById.getCreator().getUsername(),
+                commentById.getDescription(), commentById.getDateCreating(), commentById.getPost().getTitle());
+        commentRepository.delete(commentById);
+        return dto;
+    }
+
+    public List<Comment> getAllCommentsByPostId(long postId) {
+        Post postById = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
+        if (postById.getComments() == null) {
+            throw new RuntimeException("Comments not found");
+        } else {
+            return  postById.getComments();
         }
     }
 
