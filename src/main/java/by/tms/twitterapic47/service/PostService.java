@@ -37,15 +37,17 @@ public class PostService {
         return post;
     }
 
-    public Post delete(long postId, String username) {
+    public Post delete(long postId) {
         Post postById = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
-        User byUsername = userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
-        if (byUsername.getPosts().remove(postById)) {
-            userRepository.save(byUsername);
-            return postById;
-        } else {
-            throw new RuntimeException("Post not found");
-        }
+        postRepository.deleteById(postId);
+        return postById;
+//        User byUsername = userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+//        if (byUsername.getPosts().remove(postById)) {
+//            userRepository.save(byUsername);
+//            return postById;
+//        } else {
+//            throw new RuntimeException("Post not found");
+//        }
     }
 
     public Post update(Post post, String username) {
