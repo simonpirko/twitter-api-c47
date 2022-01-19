@@ -7,7 +7,9 @@ import by.tms.twitterapic47.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,10 +23,16 @@ public class PostService {
 
     public Post save(Post post, String username) {
         User byUsername = userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
-        if (byUsername.getPosts() != null) {
+        if (byUsername.getPosts() == null) {
             byUsername.setPosts(new ArrayList<>());
         }
+        Date d = new Date();
+        SimpleDateFormat format1 = new SimpleDateFormat(
+                "dd.MM.yyyy hh:mm");
+        post.setDateCreating(format1.format(d));
         byUsername.getPosts().add(post);
+        post.setCreator(byUsername);
+        postRepository.save(post);
         userRepository.save(byUsername);
         return post;
     }

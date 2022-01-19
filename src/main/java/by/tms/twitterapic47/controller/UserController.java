@@ -1,6 +1,8 @@
 package by.tms.twitterapic47.controller;
 
+import by.tms.twitterapic47.dto.user.SaveUserDto;
 import by.tms.twitterapic47.entity.User;
+import by.tms.twitterapic47.entity.UserStatus;
 import by.tms.twitterapic47.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +17,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody User user) {
-        User save = userService.save(user);
+    public ResponseEntity<?> save(@RequestBody SaveUserDto saveUserDto) {
+        User save = userService.save(conversionSaveUserDtoToUser(saveUserDto));
         return new ResponseEntity<>(save, HttpStatus.OK);
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<?> update(@PathVariable("username") String username, @RequestBody User user) {
-        User update = userService.update(username, user);
+    public ResponseEntity<?> update(@PathVariable("username") String username, @RequestBody SaveUserDto user) {
+        User update = userService.update(username, conversionSaveUserDtoToUser(user));
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
@@ -44,5 +46,16 @@ public class UserController {
                                       @RequestParam("unfollowUsername") String followUsername) {
         String unfollow = userService.unfollow(username, followUsername);
         return new ResponseEntity<>(unfollow, HttpStatus.OK);
+    }
+
+    private User conversionSaveUserDtoToUser(SaveUserDto saveUserDto){
+        User user = new User();
+        user.setUsername(saveUserDto.getUsername());
+        user.setPassword(saveUserDto.getPassword());
+        user.setLastName(saveUserDto.getLastName());
+        user.setFirstName(saveUserDto.getFirstName());
+        user.setEmail(saveUserDto.getEmail());
+        user.setStatus(UserStatus.ACTIVE);
+        return user;
     }
 }
