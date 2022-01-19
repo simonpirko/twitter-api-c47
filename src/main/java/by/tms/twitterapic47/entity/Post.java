@@ -25,7 +25,7 @@ public class Post {
 
     private String description;
 
-    private Date dateCreating;
+    private String dateCreating;
 
     @OneToMany
     private List<Comment> comments;

@@ -23,7 +23,7 @@ public class Comment {
 
     private String description;
 
-    private Date dateCreating;
+    private String dateCreating;
 
     @ManyToOne
     private Post post;
