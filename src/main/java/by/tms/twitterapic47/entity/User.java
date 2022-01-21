@@ -1,5 +1,6 @@
 package by.tms.twitterapic47.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,11 +29,8 @@ public class User {
 
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.REFRESH)
-    private List<User> subscriptions;
-
-    @OneToMany(cascade = CascadeType.REFRESH)
-    private List<Post> posts;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> subscriptions;
 
     @Enumerated(value = EnumType.STRING)
     private UserStatus status;

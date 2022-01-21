@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
 
-    Optional<List<Post>> findAllByCreator(User user);
+    Optional<List<Post>> findAllByCreatorUsername(String creatorUsername);
+
+    void deleteAllByCreatorUsername(String creatorUsername);
 }

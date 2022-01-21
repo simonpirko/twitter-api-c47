@@ -1,1 +1,0 @@
-insert into users_posts (user_id, posts_id) values (1, 1)

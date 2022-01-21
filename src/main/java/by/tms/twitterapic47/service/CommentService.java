@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -26,18 +28,30 @@ public class CommentService {
 
     public Comment add(Comment comment, long postId, String username) {
         User byUsername = userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not found"));
+        Post currentPost = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
+        comment.setCreatorUsername(byUsername.getUsername());
+        comment.setPostId(currentPost.getId());
+        comment.setDateCreating(setDate());
+        return commentRepository.save(comment);
+    }
+
+    public Comment delete(long commentId) {
+        Comment commentById = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
+        commentRepository.delete(commentById);
+        return commentById;
+    }
+
+    public Comment getCommentById(long id){
+        return commentRepository.findById(id).orElseThrow(()->new RuntimeException("Comments not found"));
+    }
+
+    public List<Comment> getAllCommentsByPostId(long postId) {
         Post postById = postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
-        if (byUsername.getPosts().stream()
-                .anyMatch(x -> x.getId() == postById.getId())) {
-            comment.setDateCreating(setDate());
-            comment.setCreator(byUsername);
-            comment.setPost(postById);
-            commentRepository.save(comment);
-            postById.getComments().add(comment);
-            postRepository.save(postById);
-            return comment;
-        } else {
-            throw new RuntimeException("Post not found");
+        List<Comment> allByPostId = commentRepository.findAllByPostId(postId);
+        if(allByPostId.isEmpty()){
+            throw new RuntimeException("Comments not found");
+        }else{
+            return allByPostId;
         }
     }
 

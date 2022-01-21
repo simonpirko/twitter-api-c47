@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class GetPostDto {
+public class ResponsePostDto {
 
     private long postId;
 
