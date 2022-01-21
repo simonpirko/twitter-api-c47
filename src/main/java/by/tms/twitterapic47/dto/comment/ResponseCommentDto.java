@@ -1,24 +1,19 @@
-package by.tms.twitterapic47.entity;
+package by.tms.twitterapic47.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Post {
+@Component
+public class ResponseCommentDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String creatorUsername;
+    private String creatorName;
 
     private String title;
 

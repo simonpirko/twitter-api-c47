@@ -1,1 +1,0 @@
-insert into post (id, creator_id, date_creating, description, title) values (null, 1, '19.01.2022 03:12', 'Zavodskoy programmist igraet v bravl stars', 'dima programmist')

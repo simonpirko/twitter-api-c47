@@ -1,4 +1,4 @@
-package by.tms.twitterapic47.dto.comment;
+package by.tms.twitterapic47.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,15 +9,17 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class GetSaveCommentDto {
+public class ResponseUserDto {
 
     private long id;
 
-    private String creatorName;
+    private String username;
 
-    private String description;
+    private String password;
 
-    private String dateCreating;
+    private String email;
 
-    private String postName;
+    private String firstName;
+
+    private String lastName;
 }
