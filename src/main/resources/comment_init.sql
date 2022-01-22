@@ -50,4 +50,3 @@ insert into comment (id, creator_username, date_creating, description, post_id) 
 insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'cannibal', '2022-01-22T13:26:58.392571', 'vanya first comment', '36');
 insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'denis78', '2022-01-22T13:26:58.392571', 'vanya first comment', '37');
 insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'denis78', '2022-01-22T13:26:58.392571', 'vanya first comment', '38');
-insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'egor', '2022-01-22T13:26:58.392571', 'vanya first comment', '39');
