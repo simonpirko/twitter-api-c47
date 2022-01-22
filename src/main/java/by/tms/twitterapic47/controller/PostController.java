@@ -1,12 +1,10 @@
 package by.tms.twitterapic47.controller;
 
-import by.tms.twitterapic47.dto.comment.ResponseCommentDto;
 import by.tms.twitterapic47.dto.post.ResponsePostDto;
 import by.tms.twitterapic47.dto.post.SavePostDto;
 import by.tms.twitterapic47.entity.Post;
 import by.tms.twitterapic47.service.PostService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

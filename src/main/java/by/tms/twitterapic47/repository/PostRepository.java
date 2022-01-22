@@ -1,7 +1,6 @@
 package by.tms.twitterapic47.repository;
 
 import by.tms.twitterapic47.entity.Post;
-import by.tms.twitterapic47.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
