@@ -1,8 +1,10 @@
 package by.tms.twitterapic47.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @ControllerAdvice
 public class ExController extends ResponseEntityExceptionHandler {
     @Override
@@ -27,7 +30,8 @@ public class ExController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    protected ResponseEntity<Object> handleMethodRuntimeException(RuntimeException runtimeException){
-        return new ResponseEntity<>(runtimeException.getMessage(),HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<Object> handleMethodRuntimeException(RuntimeException runtimeException) {
+        log.warn(String.format("Bad request by %s",runtimeException.getMessage()));
+        return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

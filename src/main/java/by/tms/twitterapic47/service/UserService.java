@@ -1,18 +1,18 @@
 package by.tms.twitterapic47.service;
 
-import by.tms.twitterapic47.entity.Post;
 import by.tms.twitterapic47.entity.User;
 import by.tms.twitterapic47.entity.UserStatus;
 import by.tms.twitterapic47.repository.CommentRepository;
 import by.tms.twitterapic47.repository.PostRepository;
 import by.tms.twitterapic47.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Stream;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -27,15 +27,19 @@ public class UserService {
 
     public User save(User user) {
         if (userStorage.findByUsername(user.getUsername()).isPresent()) {
-            throw new RuntimeException("User already exist!");
+            throw new RuntimeException(String.format("User {} already exist! %s", user.getUsername()));
         } else {
             user.setStatus(UserStatus.ACTIVE);
+            log.info("User {} save", user.getUsername());
             return userStorage.save(user);
+
         }
     }
 
     public User update(String username, User user) {
-        User byUsername = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        log.info("Request update {}", username);
+        User byUsername = userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
         user.setId(byUsername.getId());
         user.setStatus(byUsername.getStatus());
         return userStorage.save(user);
@@ -43,7 +47,9 @@ public class UserService {
 
     @Transactional
     public User delete(String username) {
-        User user = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        log.info("Request delete {}", username);
+        User user = userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
         postRepository.deleteAllByCreatorUsername(user.getUsername());
         commentRepository.deleteAllByCreatorUsername(user.getUsername());
         userStorage.delete(user);
@@ -51,10 +57,13 @@ public class UserService {
     }
 
     public String follow(String username, String followUsername) {
-        User user = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        User followUser = userStorage.findByUsername(followUsername).orElseThrow(() -> new RuntimeException("Follower not found"));
+        log.info(String.format("Request follow {} by %s", username, followUsername));
+        User user = userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
+        User followUser = userStorage.findByUsername(followUsername)
+                .orElseThrow(() -> new RuntimeException(String.format("Follower %s not found", username)));
         if (user.getSubscriptions().contains(followUser.getUsername())) {
-            throw new RuntimeException("Subscribe already exist");
+            throw new RuntimeException(String.format("Subscribe %s already exist", followUser.getUsername()));
         } else {
             user.getSubscriptions().add(followUser.getUsername());
             userStorage.save(user);
@@ -63,20 +72,25 @@ public class UserService {
     }
 
     public String unfollow(String username, String unfollowUsername) {
-        User byUsername = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        User unfollow = userStorage.findByUsername(unfollowUsername).orElseThrow(() -> new RuntimeException("Subscription not found"));
+        log.info(String.format("Request unfollow {} by %s", username, unfollowUsername));
+        User byUsername = userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
+        User unfollow = userStorage.findByUsername(unfollowUsername)
+                .orElseThrow(() -> new RuntimeException(String.format("Subscription %s not found", unfollowUsername)));
         if (byUsername.getSubscriptions().remove(unfollow.getUsername())) {
             userStorage.save(byUsername);
             return unfollowUsername;
         } else {
-            throw new RuntimeException("Subscription not found");
+            throw new RuntimeException(String.format("Subscription %s not found", unfollow.getUsername()));
         }
     }
 
     public List<String> getAllSubscriptions(String username) {
-        User user = userStorage.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        log.info(String.format("Request getAllSubscriptions by %s", username));
+        User user = userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
         if (user.getSubscriptions().isEmpty()) {
-            throw new RuntimeException("Subscription not found");
+            throw new RuntimeException(String.format("Subscription %s empty", user.getSubscriptions()));
         } else {
             return user.getSubscriptions();
         }
