@@ -5,3 +5,16 @@ insert into users (id, email, first_name, last_name, password, status, username)
 insert into users (id, email, first_name, last_name, password, status, username) values (null, 'artiom@gmail.ru', 'artiom', 'BrawlStars', '5555', 'ACTIVE', 'artiom');
 insert into users (id, email, first_name, last_name, password, status, username) values (null, 'semen@gmail.ru', 'semen', 'BrawlStars', '6666', 'ACTIVE', 'semen');
 insert into users (id, email, first_name, last_name, password, status, username) values (null, 'andrey@gmail.ru', 'andrey', 'BrawlStars', '7777', 'ACTIVE', 'andrey');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'glebov@gmail.ru', 'gleb', 'glebov', '1111', 'ACTIVE', 'gleb');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'arnold@gmail.ru', 'arnold', 'arnoldovich', '2345', 'ACTIVE', 'arnold21');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'toly17@gmail.ru', 'anatoly', 'tolyaev', '123', 'ACTIVE', 'toly17');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'arturik@gmail.ru', 'artur', 'arturiev', '1237', 'ACTIVE', 'arturik');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'borusbritva@gmail.ru', 'boris', 'britva', '1285', 'ACTIVE', 'borisbritva');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'vadimkogan@gmail.ru', 'vadim', 'kogan', '123474', 'ACTIVE', 'vadim123');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'valikbogolubov@gmail.ru', 'valik', 'bogolubov', '156', 'ACTIVE', 'valik91');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'vasyavasilliev@gmail.ru', 'vasya', 'vasiliev', '1256', 'ACTIVE', 'vasya45');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'gertorusov@gmail.ru', 'gektor', 'usov', '1234956', 'ACTIVE', 'gektor');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'ganiballector@gmail.ru', 'ganibal', 'lector', '8456', 'ACTIVE', 'cannibal');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'georgiromanov@gmail.ru', 'georgi', 'romanov', '6456', 'ACTIVE', 'denis78');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'genisdenisovich@gmail.ru', 'denis', 'denisovich', '454556', 'ACTIVE', 'denis78');
+insert into users (id, email, first_name, last_name, password, status, username) values (null, 'egorletov@gmail.ru', 'egor', 'letov', '12345643545', 'ACTIVE', 'egor');
