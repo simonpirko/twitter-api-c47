@@ -30,7 +30,6 @@ public class PostService {
     public Post save(Post post, String username) {
         User byUsername = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         post.setCreatorUsername(byUsername.getUsername());
-        post.setDateCreating(setDate());
         return postRepository.save(post);
     }
 
@@ -47,7 +46,6 @@ public class PostService {
         if (postById.getCreatorUsername().equals(updatedPost.getCreatorUsername())) {
             postById.setTitle(updatedPost.getTitle());
             postById.setDescription(updatedPost.getDescription());
-            postById.setDateCreating(setDate());
             return postRepository.save(postById);
         } else {
             throw new RuntimeException("Post not found");
@@ -70,12 +68,5 @@ public class PostService {
         } else {
             return postList;
         }
-    }
-
-    private String setDate() {
-        Date date = new Date();
-        SimpleDateFormat format1 = new SimpleDateFormat(
-                "dd.MM.yyyy hh:mm");
-        return format1.format(date);
     }
 }
