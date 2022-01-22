@@ -1,1 +1,14 @@
-insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1')
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');
+insert into comment (id, creator_username, date_creating, description, post_id) values (null, 'vanya', '2022-01-22 13:26:58.392571', 'vanya first comment', '1');

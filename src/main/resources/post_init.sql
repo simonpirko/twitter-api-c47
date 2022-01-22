@@ -1,1 +1,15 @@
-insert into post (id, creator_username, date_creating, description, title) values (null, 'vanya', '22.01.2022 01:21', 'vanya description 3', 'vanya comment')
+insert into post (id, creator_username, date_creating, description, title) values (null, 'vanya', '21.01.2022 01:21', 'vanya description 3', 'vanya comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'dima', '22.01.2022 02:21', 'dima description 3', 'dima comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'alex', '22.01.2022 03:21', 'alex description 3', 'alex comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'maxim', '22.01.2022 04:21', 'maxim description 3', 'maxim comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'andrey', '22.01.2022 05:21', 'andrey description 3', 'andrey comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'artiom', '22.01.2022 06:21', 'artiom description 3', 'artiom comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'dima', '22.01.2022 07:21', 'dima description 3', 'dima comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'artiom', '21.01.2022 01:21', 'artiom description 3', 'artiom comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'semen', '21.01.2022 01:21', 'semen description 3', 'semen comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'vanya', '21.01.2022 01:21', 'vanya description 3', 'vanya comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'alex', '20.01.2022 01:21', 'alex description 3', 'alex comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'maxim', '19.01.2022 01:21', 'maxim description 3', 'maxim comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'semen', '18.01.2022 01:21', 'semen description 3', 'semen comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'igor', '17.01.2022 01:21', 'igor description 3', 'igor comment');
+insert into post (id, creator_username, date_creating, description, title) values (null, 'andrey', '15.01.2022 01:21', 'andrey description 3', 'andrey comment');
