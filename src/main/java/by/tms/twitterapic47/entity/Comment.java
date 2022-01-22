@@ -6,7 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 @Data
 @NoArgsConstructor
@@ -24,5 +27,11 @@ public class Comment {
 
     private String description;
 
-    private String dateCreating;
+    @Column(updatable = false)
+    private LocalDateTime dateCreating;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreating = LocalDateTime.now();
+    }
 }

@@ -1,0 +1,1 @@
+insert into post (id, creator_username, date_creating, description, title) values (null, 'vanya', '22.01.2022 01:21', 'vanya description 3', 'vanya comment')

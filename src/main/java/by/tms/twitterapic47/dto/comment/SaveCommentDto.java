@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SaveCommentDto {
 
-    private String username;
+    private String creatorUsername;
 
     private String description;
 }

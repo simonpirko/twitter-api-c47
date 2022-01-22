@@ -5,21 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class ResponseCommentDto {
-
-    private long id;
-
-    private long postId;
-
-    private String creatorUsername;
+public class UpdateCommentDto {
 
     private String description;
-
-    private LocalDateTime dateCreating;
 }
