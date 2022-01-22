@@ -3,7 +3,6 @@ package by.tms.twitterapic47.controller;
 import by.tms.twitterapic47.dto.comment.ResponseCommentDto;
 import by.tms.twitterapic47.dto.comment.SaveCommentDto;
 import by.tms.twitterapic47.dto.comment.UpdateCommentDto;
-import by.tms.twitterapic47.dto.post.ResponsePostDto;
 import by.tms.twitterapic47.entity.Comment;
 import by.tms.twitterapic47.service.CommentService;
 import org.modelmapper.ModelMapper;
