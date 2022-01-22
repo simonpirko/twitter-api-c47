@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,5 +25,11 @@ public class Post {
 
     private String description;
 
-    private String dateCreating;
+    @Column(updatable = false)
+    private LocalDateTime dateCreating;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreating = LocalDateTime.now();
+    }
 }
