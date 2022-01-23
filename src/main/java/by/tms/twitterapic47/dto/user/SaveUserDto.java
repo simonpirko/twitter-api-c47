@@ -15,28 +15,23 @@ import javax.validation.constraints.*;
 public class SaveUserDto {
 
     @NotBlank
-    @NotEmpty
-    @Length(max = 255)
+    @Length(min = 1, max = 255)
     private String username;
 
     @NotBlank
-    @NotEmpty
     @Length(min = 3, max = 255)
     private String password;
 
     @NotBlank
-    @NotEmpty
     @Length(min = 5, max = 255)
     @Email
     private String email;
 
     @NotBlank
-    @NotEmpty
-    @Length(max = 255)
+    @Length(min = 1, max = 255)
     private String firstName;
 
     @NotBlank
-    @NotEmpty
-    @Length(max = 255)
+    @Length(min = 1, max = 255)
     private String lastName;
 }
