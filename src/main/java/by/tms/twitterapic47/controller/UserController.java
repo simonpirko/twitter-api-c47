@@ -4,16 +4,11 @@ import by.tms.twitterapic47.dto.user.SaveUserDto;
 import by.tms.twitterapic47.dto.user.ResponseUserDto;
 import by.tms.twitterapic47.entity.User;
 import by.tms.twitterapic47.service.UserService;
-import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/user")
@@ -26,16 +21,13 @@ public class UserController {
     private ModelMapper mapper;
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody SaveUserDto saveUserDto) {
+    public ResponseEntity<?> save(@RequestBody SaveUserDto saveUserDto) {
         User save = userService.save(mapper.map(saveUserDto, User.class));
         return new ResponseEntity<>(mapper.map(save, ResponseUserDto.class), HttpStatus.OK);
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<?> update(@Valid @PathVariable
-                                        @NotBlank
-                                        @NotEmpty
-                                        @Length(max = 255) String username, @RequestBody SaveUserDto saveUserDto) {
+    public ResponseEntity<?> update(@PathVariable String username, @RequestBody SaveUserDto saveUserDto) {
         User updatedUser = userService.update(username, mapper.map(saveUserDto, User.class));
         return new ResponseEntity<>(mapper.map(updatedUser, ResponseUserDto.class), HttpStatus.OK);
     }

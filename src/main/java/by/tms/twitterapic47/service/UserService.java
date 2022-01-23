@@ -7,14 +7,19 @@ import by.tms.twitterapic47.repository.PostRepository;
 import by.tms.twitterapic47.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userStorage;
@@ -24,6 +29,21 @@ public class UserService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    public User getUser(String username){
+        return userStorage.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Optional<User> u = userStorage.findByUsername(login);
+        if (u.isPresent()) {
+            return new org.springframework.security.core.userdetails.User(u.get().getUsername(), u.get().getPassword(), true, true, true, true, new HashSet<>());
+        } else {
+            throw new UsernameNotFoundException(String.format("User %s is not found", login));
+        }
+    }
 
     public User save(User user) {
         if (userStorage.findByUsername(user.getUsername()).isPresent()) {
