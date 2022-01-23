@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,5 +33,11 @@ public class ExController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodRuntimeException(RuntimeException runtimeException) {
         log.warn(String.format("Bad request by %s",runtimeException.getMessage()));
         return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException constraintViolationException) {
+        log.warn(String.format("Bad request by %s",constraintViolationException.getMessage()));
+        return new ResponseEntity<>(constraintViolationException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
