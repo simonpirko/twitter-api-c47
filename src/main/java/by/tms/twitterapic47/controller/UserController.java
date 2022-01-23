@@ -7,6 +7,9 @@ import by.tms.twitterapic47.service.UserService;
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -62,7 +67,14 @@ public class UserController {
     }
 
     @GetMapping("/subscriptions/{username}")
-    public ResponseEntity<?> getSubscriptions(@PathVariable @Length(min = 1, max = 255) String username) {
-        return new ResponseEntity<>(userService.getAllSubscriptions(username), HttpStatus.OK);
+    public ResponseEntity<?> getSubscriptions(@PathVariable @Length(min = 1, max = 255) String username,
+                                              @RequestParam Optional<Integer> page,
+                                              @RequestParam Optional<Integer> size,
+                                              @RequestParam Optional<String> sortBy) {
+        List<String> listSubscriptions = userService.getAllSubscriptions(username, (PageRequest.of(page.orElse(0),
+                size.orElse(5),
+                Sort.Direction.ASC,
+                sortBy.orElse("postId"))));
+        return new ResponseEntity<>(listSubscriptions, HttpStatus.OK);
     }
 }

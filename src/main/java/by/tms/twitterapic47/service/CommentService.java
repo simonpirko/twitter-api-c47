@@ -7,6 +7,8 @@ import by.tms.twitterapic47.repository.PostRepository;
 import by.tms.twitterapic47.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,11 +44,11 @@ public class CommentService {
         return commentById;
     }
 
-    public List<Comment> getCommentsByPostId(long postId) {
+    public Page<Comment> getCommentsByPostId(long postId, Pageable pageable) {
         log.info(String.format("Request list Comments by postId %s", postId));
         postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException(String.format("Post %s not found",postId)));
-        List<Comment> allByPostId = commentRepository.findAllByPostId(postId);
+        Page<Comment> allByPostId = commentRepository.findAllByPostId(postId,pageable);
         if (allByPostId.isEmpty()) {
             throw new RuntimeException(String.format("Comments is empty"));
         } else {

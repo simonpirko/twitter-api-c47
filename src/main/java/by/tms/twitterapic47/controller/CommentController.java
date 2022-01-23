@@ -8,6 +8,8 @@ import by.tms.twitterapic47.service.CommentService;
 import org.hibernate.annotations.Type;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,8 +46,14 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}/getAll")
-    public ResponseEntity<?> getCommentsByPostId(@PathVariable @Positive long postId) {
-        List<ResponseCommentDto> commentDto = commentService.getCommentsByPostId(postId)
+    public ResponseEntity<?> getCommentsByPostId(@PathVariable @Positive long postId,
+                                                 @RequestParam Optional<Integer> page,
+                                                 @RequestParam Optional<Integer> size,
+                                                 @RequestParam Optional<String> sortBy) {
+        List<ResponseCommentDto> commentDto = commentService.getCommentsByPostId(postId,(PageRequest.of(page.orElse(0),
+                        size.orElse(5),
+                        Sort.Direction.ASC,
+                        sortBy.orElse("postId"))))
                 .stream()
                 .map(comment -> mapper.map(comment, ResponseCommentDto.class))
                 .collect(Collectors.toList());
