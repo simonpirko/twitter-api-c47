@@ -73,7 +73,7 @@ public class UserController {
                                               @RequestParam Optional<String> sortBy) {
         Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.ASC, sortBy.orElse("id"));
         List<String> listSubscriptions = userService.getAllSubscriptions(username);
-        PagedListHolder<ResponsePostDto> listHolder = new PagedListHolder(listSubscriptions);
+        PagedListHolder listHolder = new PagedListHolder(listSubscriptions);
         listHolder.setPageSize(pageable.getPageSize());
         listHolder.setPage(pageable.getPageNumber());
         return new ResponseEntity<>(listHolder.getPageList(), HttpStatus.OK);

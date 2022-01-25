@@ -70,7 +70,7 @@ public class PostController {
                 .stream()
                 .map(post -> mapper.map(post, ResponsePostDto.class))
                 .collect(Collectors.toList());
-        PagedListHolder<ResponsePostDto> listHolder = new PagedListHolder(postDto);
+        PagedListHolder listHolder = new PagedListHolder(postDto);
         listHolder.setPageSize(pageable.getPageSize());
         listHolder.setPage(pageable.getPageNumber());
         return new ResponseEntity<>(listHolder.getPageList(), HttpStatus.OK);

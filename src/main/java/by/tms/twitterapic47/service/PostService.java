@@ -66,7 +66,7 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException(String.format("List posts by %s are empty", username)));
         Page<Post> posts = postRepository.findAllByCreatorUsername(username, pageable);
         if (posts.isEmpty()) {
-            throw new RuntimeException(String.format("Comments is empty"));
+            throw new RuntimeException("Comments is empty");
         } else {
             return posts;
         }
