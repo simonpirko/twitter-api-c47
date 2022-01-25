@@ -1,6 +1,5 @@
 package by.tms.twitterapic47.service;
 
-import by.tms.twitterapic47.dto.comment.ResponseCommentDto;
 import by.tms.twitterapic47.entity.User;
 import by.tms.twitterapic47.entity.UserStatus;
 import by.tms.twitterapic47.repository.CommentRepository;
@@ -8,13 +7,10 @@ import by.tms.twitterapic47.repository.PostRepository;
 import by.tms.twitterapic47.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -89,7 +85,7 @@ public class UserService {
         }
     }
 
-    public List<String> getAllSubscriptions(String username, Pageable pageable) {
+    public List<String> getAllSubscriptions(String username) {
         log.info(String.format("Request getAllSubscriptions by %s", username));
         User user = userStorage.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));

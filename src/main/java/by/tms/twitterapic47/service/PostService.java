@@ -60,9 +60,9 @@ public class PostService {
         }
     }
 
-    public Page<Post> getPosts(String username, Pageable pageable) {
+    public Page<Post> getPostsByPostCreatorUsername(String username, Pageable pageable) {
         log.info(String.format("Request list post by username %s", username));
-        postRepository.findByCreatorUsername(username)
+        postRepository.findAllByCreatorUsername(username)
                 .orElseThrow(() -> new RuntimeException(String.format("List posts by %s are empty", username)));
         Page<Post> posts = postRepository.findAllByCreatorUsername(username, pageable);
         if (posts.isEmpty()) {
@@ -72,7 +72,7 @@ public class PostService {
         }
     }
 
-    public List<Post> getFollowersPosts(String username,Pageable pageable) {
+    public List<Post> getFollowersPosts(String username) {
         log.info(String.format("Request list FollowersPosts by username %s", username));
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException(String.format("User %s not found", username)));
@@ -81,9 +81,11 @@ public class PostService {
             Optional<List<Post>> currentUserSubscription = postRepository.findAllByCreatorUsername(subscription);
             currentUserSubscription.ifPresent(postList::addAll);
         }
+
         if (postList.isEmpty()) {
             throw new RuntimeException(String.format("List FollowersPosts by user %s are empty", username));
         } else {
+
             return postList;
         }
     }

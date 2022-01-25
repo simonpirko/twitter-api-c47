@@ -5,7 +5,6 @@ import by.tms.twitterapic47.dto.comment.SaveCommentDto;
 import by.tms.twitterapic47.dto.comment.UpdateCommentDto;
 import by.tms.twitterapic47.entity.Comment;
 import by.tms.twitterapic47.service.CommentService;
-import org.hibernate.annotations.Type;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +48,7 @@ public class CommentController {
                                                  @RequestParam Optional<Integer> page,
                                                  @RequestParam Optional<Integer> size,
                                                  @RequestParam Optional<String> sortBy) {
-        List<ResponseCommentDto> commentDto = commentService.getCommentsByPostId(postId,(PageRequest.of(page.orElse(0),
+        List<ResponseCommentDto> commentDto = commentService.getCommentsByPostId(postId, (PageRequest.of(page.orElse(0),
                         size.orElse(5),
                         Sort.Direction.ASC,
                         sortBy.orElse("postId"))))
@@ -61,7 +59,7 @@ public class CommentController {
     }
 
     @PutMapping("/edit/{commentId}")
-    public ResponseEntity<?> edit(@PathVariable @Positive long commentId,@Valid @RequestBody UpdateCommentDto updateComment) {
+    public ResponseEntity<?> edit(@PathVariable @Positive long commentId, @Valid @RequestBody UpdateCommentDto updateComment) {
         Comment edit = commentService.edit(commentId, updateComment.getDescription());
         return new ResponseEntity<>(mapper.map(edit, ResponseCommentDto.class), HttpStatus.OK);
     }

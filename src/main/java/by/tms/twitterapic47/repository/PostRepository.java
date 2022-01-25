@@ -14,7 +14,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Optional<List<Post>> findAllByCreatorUsername(String creatorUsername);
 
-    Optional<Post> findByCreatorUsername(String creatorUserName);
-
     void deleteAllByCreatorUsername(String creatorUsername);
+
 }
