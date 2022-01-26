@@ -7,6 +7,8 @@ import by.tms.twitterapic47.repository.PostRepository;
 import by.tms.twitterapic47.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -58,10 +60,16 @@ public class PostService {
         }
     }
 
-    public List<Post> getPosts(String username) {
+    public Page<Post> getPostsByPostCreatorUsername(String username, Pageable pageable) {
         log.info(String.format("Request list post by username %s", username));
-        return postRepository.findAllByCreatorUsername(username)
+        postRepository.findAllByCreatorUsername(username)
                 .orElseThrow(() -> new RuntimeException(String.format("List posts by %s are empty", username)));
+        Page<Post> posts = postRepository.findAllByCreatorUsername(username, pageable);
+        if (posts.isEmpty()) {
+            throw new RuntimeException("Comments is empty");
+        } else {
+            return posts;
+        }
     }
 
     public List<Post> getFollowersPosts(String username) {
@@ -73,9 +81,11 @@ public class PostService {
             Optional<List<Post>> currentUserSubscription = postRepository.findAllByCreatorUsername(subscription);
             currentUserSubscription.ifPresent(postList::addAll);
         }
+
         if (postList.isEmpty()) {
             throw new RuntimeException(String.format("List FollowersPosts by user %s are empty", username));
         } else {
+
             return postList;
         }
     }
